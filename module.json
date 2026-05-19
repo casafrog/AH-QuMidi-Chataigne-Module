@@ -5,7 +5,7 @@
 	
 	"version":"0",
 	"description":"Special MIDI Module for Allen&Heath Qu Series Audio Mixers",
-	"url":"https://github.com/",
+	"url":"https://github.com/casafrog/AH-QuMidi-Chataigne-Module",
 	"downloadURL":"https://",
 	
 	"hasInput":false,
