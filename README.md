@@ -1,30 +1,59 @@
-Chataigne Module for Allen&Heath Qu Series Audio Mixer Midi Control v1.0.0 - T.Hyde c2026 www.casafrog.com
-========================================================================================================
-This file is a Chataigne Custom Module to control an Allen&Heath Qu Series Audio Mixer under (USB) Midi Control.
-These consoles usually have either a tranditional MIDI in or USB-Midi (Or optionally TCP-MIDI) that some of the
-controls or functions may be triggered externally.
+Chataigne Module for Special MIDI Module for Allen&Heath Qu Series Audio Mixers v1.0.0 - T.Hyde c2026 www.casafrog.com
+=======================================================================================================================
+This file is a Chataigne Custom Module to control an Allen&Heath Qu-series mixer via its native USB-Midi capability.
+This console (at time of writing) has two basic operative modes, a native "Qu-Midi" mode and HUI/Mackie-compatible mode.
+The "Qu-Midi" mode is useful for scene selection and muting, wherein the HUI mode is more useful for DAW - and the two modes
+do *NOT* have much in the way of overlapping capability, so it is important to choose your mode carefully. This module does *not*
+support the HUI/Mackie (DAW control) mode and is intended for live show control operation, where the faders are still under your control 
+and the mix is still live (versus an offline recording session where the console is just a control surface for a DAW).
 
-A QU-series console is typically configured either as a remote-controlled audio mixer or as a DAW control surface,
-but depending on options, configuration or firmware version, not necessarily both at the same time.
-This module concetrates on the functions that are fully available in the "Qu-Midi" mode (not the HUI/Mackie modes,
-which are for DAW control). Not all functions of the console are available in both modes - in fact there is very little
-crossover between the two modes, so choose your modes carefully.
+Since the USB-Midi is "CoreAudio" (Mac) compliant and regular MIDI class-compliant on Windows/Linux, you do *not* need any additional
+drivers, nor do you need the A&H Midi Controller Software package installed (despite what a particular website recommends). 
+This is really plug and play.
 
-For this module, the most important functions are muting and scene recall. In a live performace setting, most everything
-on the console can be controlled using these two concepts. Mutes require a lot of finger presses, so automating those make
-sense. Scene recall (via the Scene menu) can take a lot of clicks. You can of course set your softkeys to control next/previous
-scene recall (highly recommended) however if you have an active audio mix, even losing one hand from the faders can be cumbersome.
-Additionally, there are only 100 scenes (in most Qu systems; based upon current firmware and options, subject to change). If
-you have a long show, you may end up loading a second show during intermission just to have enough scenes to work with.
+The basic premise is to load the module, and in the module inspector set your MIDI OUT interface. It will likely be called "QuXX MIDI In"
+as the name reference is relative to the console, not the control PC. There is no need to set the module's "Midi Input" interface as there 
+is no feedback from the console.
 
-If you use Chataigne to trigger your scenes, (or any external Midi sequencer for that matter), you are no longer limited to
-sequential scene choices - you can access a scene randomly, which means it can act more as a sound preset than a scene.
-For example, if you are handling 10 wireless mics and they are not always all on stage for the entire show, you can make a
-mic matrix to know how many scenes you need to record so that only the necessary mics are unmuted at their defualt levels.
-Recall that scene (randomly now!) whenever those mics are on stage and you have fewer keypresses to deal with. Since the console
-is NOT in DAW mode, you still have full manual control over every existing button or function as you did prior.
+Second is to ensure that the MIDI channel for outbound is correct. The console defaults to channel 1, as does the module so this should be
+fine if you haven't changed those defaults. (DAW is default Midi Channel 2, so you might want to be sure to avoid that specifically).
 
-Be sure to check the Midi channels in the console settings so that the Chataigne out channel is matching the console in channel.
-Note for Mac users - the console is CoreAudio compliant (as of this writing) so no additional drivers or driver configuration 
-is required. You do NOT need to have the A&H Midi Control App installed and running as this is native/raw Midi.
+Then create a Trigger layer in your sequence (or however you wish to trigger the module), drop in a trigger and add a new consequence,
+setting the consequence to be the AH-QuMidi module, then a selection of potential actions such as:
+
+   single channel mute (set channel in numeric parameter)
+   single channel unmute (set channel in numeric parameter),
+
+if you wish to target a specific single channel, noting that these really ar the CHANNELS not the FADER STRIPS
+
+or groups of targets, which have many checkboxes so you can do more than one at a time in the same trigger.
+Note that a check in the box is MUTE ENABLED, not channel enabled, so the checkbox mimics the RED LIGHT on your console:
+
+   MuteGroups mute/unmute - all 4 MG's
+   Stereo Pair mute/unmute - all 3 ST's
+   FX Mute/unmute - all 4 FX Returns (fxr) and all 4 FX Sends (fxs)
+   Mix1Master - one click, all quiet. Kind of. (The other Mix masters do not have midi capability in this mode at time of writing).
+
+   and the big one:
+   All Detail Mute Control - which encompasses all the available mutes noted above. Ultimate Cosmic Power.
+
+Basic mutes and unmites are fine, but to exercise real control, scenes are your better option. Save scenes. Whatever you have on the active layer 
+of your console (let's face it you should be using the Custom Layer for your show, so we will assume that, but a scene still saves every state)...
+
+The scene will have a numbered slot that you save it in, regardless of the arbitrary name you give it. Unlike softkey "Next-Recall" or "Prior-Recall"
+or having to nav through the scenes menu to find a scene, you can jump scenes arbitrarily in any order at any time. This means you can configure scenes
+more as a "stage preset" rather than a "replicated state that happens next". Thus, if you have a group of mics on stage that the scenario is recurrent
+(such as two primaries and an ensemble) you can simply recall that scene for each time during the show it occurs rather than having multiple copies of it
+(which might eat up your 100 scenes per show limit that the console has quickly...). Moreover if you modify that scene (and save it), then your modification
+tracks for each reuse of that scene so your fingers get a break.
+
+Pop in the scene number as a parameter and off it goes, faders flying on their own.
+
+Mix and match scene changes and mutes as you need to accommodate performance variants or recovery situations. Having the automation is the easy part, but it can 
+be a hurdle that prevents you from pushing the technology further to make your job easier. With the above, you can now concentrate on having multiple shows to 
+automatically handle understudies jsut by changing the input routing (or processing source depending on firmware) and just load the alternate show. Or if a mic 
+pack fails and you need to swap to backups, you don't have to keep referencing hand-written notes, just re-assign the new source to the channel. Admittedly, this 
+isn't a feature the module solves, but the module solves the automation at a particular time so you can concentrate on the changes or recovery, guving you more 
+time to concentrate on fixing the problem, since you can only be navigating one menu at a time......
+
 =========================================================================================
