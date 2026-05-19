@@ -1,0 +1,212 @@
+{
+	"name":"AH-QuMidi",
+  	"type": "MIDI",
+  	"path": "Console",
+	
+	"version":"0",
+	"description":"Special MIDI Module for Allen&Heath Qu Series Audio Mixers",
+	"url":"https://github.com/",
+	"downloadURL":"https://",
+	
+	"hasInput":false,
+	"hasOutput":true, 
+
+	"hideDefaultParameters": [
+		"autoAdd",
+		"octaveShift",
+		"usePitchForNoteNames"
+  	],
+	"defaults": {
+		"autoAdd": 0,
+		"ocataveShift": 0,
+		"usePitchForNoteNames": 0
+	},
+
+  	"hideDefaultCommands": true,
+
+	"parameters": {
+		"MIDI Send Channel": {
+			"type": "Integer",
+			"description": "MIDI Channel to send commands on",
+			"min": 1,
+			"max": 16,
+			"default": 1
+		}
+  	},
+	"scripts":
+	[
+		"AH-QuMidi.js"
+	],
+	"values":
+	{
+	},
+	"commands":
+	{
+		"Mute Single Channel":
+		{
+			"menu":"Mute",
+			"callback":"mute_action",
+			"parameters":
+			{
+				"Mute Channel":
+		        {
+		        	"type":"Integer",
+		        	"min":1,
+		        	"max":32,
+		        	"default":1
+		        }
+			}	
+		},
+		"UnMute Single Channel":
+		{
+			"menu":"Mute",
+			"callback":"unmute_action",
+			"parameters":
+			{
+				"Unmute Channel":
+		        {
+		        	"type":"Integer",
+		        	"min":1,
+		        	"max":32,
+		        	"default":1
+		        }
+			}
+		},
+		"Mute Groups":
+		{
+			"menu":"Mute",
+			"callback":"groupmute_action",
+			"parameters":
+			{
+				"muteInfo":{"type":"String","default":"Checked = MUTED | Unchecked = ENABLED","readonly":true},
+				"mg1":{"type":"Boolean"},
+				"mg2":{"type":"Boolean"},
+				"mg3":{"type":"Boolean"},
+				"mg4":{"type":"Boolean"}
+			}	
+		},
+		"Mute Stereo Pairs":
+		{
+			"menu":"Mute",
+			"callback":"stmute_action",
+			"parameters":
+			{
+				"muteInfo":{"type":"String","default":"Checked = MUTED | Unchecked = ENABLED","readonly":true},
+				"st1":{"type":"Boolean"},
+				"st2":{"type":"Boolean"},
+				"st3":{"type":"Boolean"}
+			}		
+		},
+		"Mute DCAs":
+		{
+			"menu":"Mute",
+			"callback":"dcamute_action",
+			"parameters":
+			{
+				"muteInfo":{"type":"String","default":"Checked = MUTED | Unchecked = ENABLED","readonly":true},
+				"dca1":{"type":"Boolean"},
+				"dca2":{"type":"Boolean"},
+				"dca3":{"type":"Boolean"},
+				"dca4":{"type":"Boolean"}
+			}	
+		},
+		"Mute FXs":
+		{
+			"menu":"Mute",
+			"callback":"fxmute_action",
+			"parameters":
+			{
+				"muteInfo":{"type":"String","default":"Checked = MUTED | Unchecked = ENABLED. 'fxr'=RETURN, 'fxs'=SEND","readonly":true},
+				"fxr1":{"type":"Boolean"},
+				"fxr2":{"type":"Boolean"},
+				"fxr3":{"type":"Boolean"},
+				"fxr4":{"type":"Boolean"},
+				"fxs1":{"type":"Boolean"},
+				"fxs2":{"type":"Boolean"},
+				"fxs3":{"type":"Boolean"},
+				"fxs4":{"type":"Boolean"}
+			}	
+		},
+		"All Detail Mute Control":
+		{
+			"menu":"Mute",
+			"callback":"detailmute_action",
+			"parameters":
+			{
+				"muteInfo":{"type":"String","default":"Checked = MUTED | Unchecked = ENABLED 'fxr'=RETURN, 'fxs'=SEND","readonly":true},
+				"ch01":{"type":"Boolean"},
+				"ch02":{"type":"Boolean"},
+				"ch03":{"type":"Boolean"},
+				"ch04":{"type":"Boolean"},
+				"ch05":{"type":"Boolean"},
+				"ch06":{"type":"Boolean"},
+				"ch07":{"type":"Boolean"},
+				"ch08":{"type":"Boolean"},
+				"ch09":{"type":"Boolean"},
+				"ch10":{"type":"Boolean"},
+				"ch11":{"type":"Boolean"},
+				"ch12":{"type":"Boolean"},
+				"ch13":{"type":"Boolean"},
+				"ch14":{"type":"Boolean"},
+				"ch15":{"type":"Boolean"},
+				"ch16":{"type":"Boolean"},
+				"ch17":{"type":"Boolean"},
+				"ch18":{"type":"Boolean"},
+				"ch19":{"type":"Boolean"},
+				"ch20":{"type":"Boolean"},
+				"ch21":{"type":"Boolean"},
+				"ch22":{"type":"Boolean"},
+				"ch23":{"type":"Boolean"},
+				"ch24":{"type":"Boolean"},
+				"ch25":{"type":"Boolean"},
+				"ch26":{"type":"Boolean"},
+				"ch27":{"type":"Boolean"},
+				"ch28":{"type":"Boolean"},
+				"ch29":{"type":"Boolean"},
+				"ch30":{"type":"Boolean"},
+				"ch31":{"type":"Boolean"},
+				"ch32":{"type":"Boolean"},
+				"ch33":{"type":"Boolean"},
+				"ch34":{"type":"Boolean"},
+				"ch35":{"type":"Boolean"},
+				"ch36":{"type":"Boolean"},
+				"st1":{"type":"Boolean"},
+				"st2":{"type":"Boolean"},
+				"st3":{"type":"Boolean"},
+				"dca1":{"type":"Boolean"},
+				"dca2":{"type":"Boolean"},
+				"dca3":{"type":"Boolean"},
+				"dca4":{"type":"Boolean"},
+				"mg1":{"type":"Boolean"},
+				"mg2":{"type":"Boolean"},
+				"mg3":{"type":"Boolean"},
+				"mg4":{"type":"Boolean"},
+				"fxr1":{"type":"Boolean"},
+				"fxr2":{"type":"Boolean"},
+				"fxr3":{"type":"Boolean"},
+				"fxr4":{"type":"Boolean"},
+				"fxs1":{"type":"Boolean"},
+				"fxs2":{"type":"Boolean"},
+				"fxs3":{"type":"Boolean"},
+				"fxs4":{"type":"Boolean"},
+				"mix1master":{"type":"Boolean"}
+
+			}
+		},
+		"Select Scene":
+		{
+			"menu":"Scene",
+			"callback":"selectscene_action",
+			"parameters":
+			{
+				"Scene":
+		        {
+		        	"type":"Integer",
+		        	"min":1,
+		        	"max":100,
+		        	"default":1
+		        }
+			}
+		}
+	}
+}
